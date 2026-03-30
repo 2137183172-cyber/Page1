@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>智能咨询</title>
+</head>
+
+<body style="margin:0;">
+
+<!-- 浮标 -->
+
+<div id="chat-float-btn">💬</div>
+
+<!-- 聊天容器 -->
+
+<div id="chat-container"></div>
+
+<style>
+#chat-float-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #07C160, #06ad56);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  z-index: 9999;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+#chat-container {
+  position: fixed;
+  right: 15px;
+  bottom: 180px;
+  width: 360px;
+  height: 520px;
+  display: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+/* 手机适配 */
+@media (max-width: 768px) {
+  #chat-container {
+    width: 100%;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+  }
+}
+</style>
+
+<!-- Coze SDK -->
+
+<script src="https://sf-cdn.coze.com/coze-web-sdk.js"></script>
+
+<script>
+let client = null;
+let opened = false;
+
+document.getElementById("chat-float-btn").onclick = function () {
+  const container = document.getElementById("chat-container");
+
+  opened = !opened;
+  container.style.display = opened ? "block" : "none";
+
+  if (!client) {
+    client = new CozeWebSDK.WebChatClient({
+      config: {
+        bot_id: "KDBWsbl6ZS0", // 已帮你提取
+      },
+      componentProps: {
+        container: "#chat-container"
+      }
+    });
+  }
+};
+</script>
+
+</body>
+</html>
